@@ -15,8 +15,8 @@ based on the current value of the inputs, and the defined rules.
 
 	int main()
 	{
-		// Create fuzzy logic object
-		Fuzzy_Logic Fuzzy_Machine;
+	    // Create fuzzy logic object
+	    Fuzzy_Logic Fuzzy_Machine;
 
 	    // Create inputs set objects
 	    Input * Error = Fuzzy_Machine.create_input();
