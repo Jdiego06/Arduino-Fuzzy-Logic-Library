@@ -65,5 +65,6 @@ based on the current value of the inputs, and the defined rules.
 	}
 
 
-# BEER WARE
-jd99@outlook.com> written this file. As long as you retain this notice you can do whatever you want with this  stuff. If we meet some day, and you think this stuff is worth it, you can  buy me a beer in return. Juan-Cardona
+# BEER WARE   
+"THE BEER-WARE" (Revision 42):   
+<jd99@outlook.com> written this file. As long as you retain this notice you can do whatever you want with this  stuff. If we meet some day, and you think this stuff is worth it, you can  buy me a beer in return. Juan-Cardona
