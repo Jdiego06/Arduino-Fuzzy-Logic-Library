@@ -8,60 +8,60 @@ based on the current value of the inputs, and the defined rules.
 
 # Example
 
-    #include <iostream>
-	#include "fuzzy_logic.h"
+	#include "Fuzzy_logic.h"
 
-	using namespace std;
+	  // Create fuzzy logic object
+	  Fuzzy_Logic Fuzzy_Machine;
 
-	int main()
+	  // Create inputs set objects
+	  Input *Error = Fuzzy_Machine.create_input();
+	  Input *Derivate = Fuzzy_Machine.create_input();
+
+	  // Create outputs set objects
+	  Output *Pwm = Fuzzy_Machine.create_output();
+
+	  //Set sets to input objects
+	  Set *Low_Error = Fuzzy_Machine.create_input_set(Error, -1, 0, 1);
+	  Set *High_Error = Fuzzy_Machine.create_input_set(Error, 2, 10, 20, 100);
+	  Set *Low_Derivate = Fuzzy_Machine.create_input_set(Derivate, -0.1, 0, 0.1);
+
+	  //Set sets to output objects
+	  Set *High_Pwm = Fuzzy_Machine.create_output_set(Pwm, 100);
+	  Set *Medium_Pwm = Fuzzy_Machine.create_output_set(Pwm, 50);
+	  Set *Low_Pwm = Fuzzy_Machine.create_output_set(Pwm, 10);
+
+
+	void setup()
 	{
-	    // Create fuzzy logic object
-	    Fuzzy_Logic Fuzzy_Machine;
+	  Serial.begin(9600);
 
-	    // Create inputs set objects
-	    Input * Error = Fuzzy_Machine.create_input();
-	    Input * Derivate = Fuzzy_Machine.create_input();
-
-	    // Create outputs set objects
-	    Output * Pwm = Fuzzy_Machine.create_output();
+	  //Create rules
+	  Fuzzy_Machine.create_rule(High_Error, High_Pwm);
+	  Fuzzy_Machine.create_rule(Low_Error, Low_Derivate, Medium_Pwm);
+	}
 
 
-	    //Set sets to input objects
-	    Set * Low_Error = Fuzzy_Machine.create_input_set(Error, -1, 0, 1);
-	    Set * High_Error = Fuzzy_Machine.create_input_set(Error, 2, 10, 20,100);
-	    Set* Low_Derivate = Fuzzy_Machine.create_input_set(Derivate, -0.1, 0, 0.1);
+	void loop()
+	{
+	  //Set actual values to inputs
+	  float actual_error = 0.1;
+	  float actual_derivate = 0;
+
+	  Serial.println(actual_error);
+	  Serial.println(actual_derivate);
 
 
-	    //Set sets to output objects
-	    Set * High_Pwm = Fuzzy_Machine.create_output_set(Pwm,100);
-	    Set * Medium_Pwm = Fuzzy_Machine.create_output_set(Pwm,50);
-	    Set * Low_Pwm = Fuzzy_Machine.create_output_set(Pwm,10);
+	  Fuzzy_Machine.set_input_value(Error, actual_error);
+	  Fuzzy_Machine.set_input_value(Derivate, actual_derivate);
 
+	  //Defuzzificación
+	  Fuzzy_Machine.deffuzy();
 
-	    //Create rules
-	    Fuzzy_Machine.create_rule(High_Error,High_Pwm);
-	    Fuzzy_Machine.create_rule(Low_Error,Low_Derivate,Medium_Pwm);
-
-
-	    //Set actual values to inputs
-	    float actual_error = 0.1 ;
-	    float actual_derivate = 0;
-
-	    Fuzzy_Machine.set_input_value(Error,actual_error);
-	    Fuzzy_Machine.set_input_value(Derivate,actual_derivate);
-
-
-	    //Defuzzificación
-	    Fuzzy_Machine.deffuzy();
-
-
-	    //Get Output
-	    float Control=Fuzzy_Machine.get_output_result(Pwm);
-
-	    cout << "Run Success, result: ";
-	    cout << Control << endl;
-
-	    return 0;
+	  //Get Output
+	  float Control = Fuzzy_Machine.get_output_result(Pwm);
+	  Serial.println(Control);
+	  Serial.println("");
+	  delay(10000);
 	}
 
 # License
